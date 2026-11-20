@@ -1,0 +1,20 @@
+{
+    "KPackageStructure": "KWin/Script",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "NealimeKenna"
+            }
+        ],
+        "Description": "Shows on the task manager icon of the YouTube Music desktop app (Pear Desktop) whether the song is liked, with like and dislike shortcuts. Requires the app's API Server plugin.",
+        "EnabledByDefault": false,
+        "Icon": "emblem-favorite",
+        "Id": "ytmusic-like-indicator",
+        "License": "GPL-2.0+",
+        "Name": "YouTube Music Like Indicator",
+        "Version": "1.0",
+        "Website": "https://github.com/NealimeKenna/ytmusic-like-indicator"
+    },
+    "X-Plasma-API": "declarativescript",
+    "X-Plasma-MainScript": "ui/main.qml"
+}

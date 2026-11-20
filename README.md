@@ -46,6 +46,29 @@ Open them with `gnome-extensions prefs ytmusic-like-indicator@nealimekenna.githu
 - the host and port of the API Server plugin (default `127.0.0.1:26538`),
 - forgetting the access token, so the next click asks the app for access again.
 
+## KDE Plasma
+
+The `kwin` folder holds a KWin script for Plasma 6 that puts the same heart on the app's icon in the task manager.
+
+- Red heart: liked. Outline: not liked. Broken heart: disliked. No heart: the app isn't running or nothing is playing.
+- <kbd>Shift</kbd>+<kbd>Meta</kbd>+<kbd>L</kbd> likes the song or removes the like, <kbd>Shift</kbd>+<kbd>Meta</kbd>+<kbd>D</kbd>
+  dislikes it or removes the dislike. Both can be changed in System Settings, **Keyboard → Shortcuts → KWin**.
+- The heart is hidden while a full-screen window is active.
+
+The heart's position comes from the icon geometry the task manager reports to KWin, the same one the minimize
+animation uses.
+
+Setup:
+
+1. Enable the app's API Server plugin as in step 1 above.
+2. Install and enable the script with `make kwin-install`, then log out and back in. KWin caches the script's QML, so
+   updates also take effect at the next login.
+3. The app asks once to allow `kwin-like-indicator`; choose **Allow**. After that it hands the script a token without
+   asking.
+
+The script reads the API host and port from `kwinrc`, group `Script-ytmusic-like-indicator`, keys `host` and `port`
+(default `127.0.0.1:26538`).
+
 ## License
 
 GPL-2.0-or-later
