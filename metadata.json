@@ -1,0 +1,9 @@
+{
+  "uuid": "ytmusic-like-indicator@nealimekenna.github.com",
+  "name": "YouTube Music Like Indicator",
+  "description": "Shows in the top bar whether the song playing in the YouTube Music desktop app (th-ch/pear-desktop) is liked, and likes it with a click or a keyboard shortcut. Requires the app's API Server plugin.",
+  "shell-version": ["48", "49", "50"],
+  "settings-schema": "org.gnome.shell.extensions.ytmusic-like-indicator",
+  "url": "https://github.com/NealimeKenna/ytmusic-like-indicator",
+  "version-name": "1.0"
+}
