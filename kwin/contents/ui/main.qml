@@ -18,12 +18,17 @@ Item {
     property bool isAuthorizing: false
     property bool isAccessDenied: false
     property var pendingRefresh: null
+    property var appWindow: null
     property rect iconGeometry: Qt.rect(0, 0, 0, 0)
 
     readonly property bool hasSong: songStates.includes(likeState)
     readonly property bool isLiked: likeState === "LIKE"
     readonly property bool isDisliked: likeState === "DISLIKE"
     readonly property bool isFullScreenActive: Workspace.activeWindow?.fullScreen ?? false
+
+    function findAppWindow(excludedWindow) {
+        return Array.from(Workspace.stackingOrder).find(window => window !== excludedWindow && window.desktopFileName === appDesktopFileName) ?? null;
+    }
 
     function request(method, path, onDone) {
         const httpRequest = new XMLHttpRequest();
@@ -53,8 +58,7 @@ Item {
     }
 
     function refresh() {
-        const appWindow = Array.from(Workspace.stackingOrder).find(window => window.desktopFileName === appDesktopFileName);
-        iconGeometry = appWindow ? appWindow.iconGeometry : Qt.rect(0, 0, 0, 0);
+        iconGeometry = appWindow.iconGeometry;
 
         if (pendingRefresh)
             return;
@@ -94,10 +98,29 @@ Item {
 
     Timer {
         interval: root.pollIntervalMilliseconds
-        running: true
+        running: root.appWindow !== null
         repeat: true
         triggeredOnStart: true
         onTriggered: root.refresh()
+    }
+
+    Component.onCompleted: appWindow = findAppWindow()
+
+    Connections {
+        target: Workspace
+
+        function onWindowAdded(window) {
+            if (!root.appWindow && window.desktopFileName === root.appDesktopFileName)
+                root.appWindow = window;
+        }
+
+        function onWindowRemoved(window) {
+            if (window !== root.appWindow)
+                return;
+            root.appWindow = root.findAppWindow(window);
+            if (!root.appWindow)
+                root.likeState = "UNREACHABLE";
+        }
     }
 
     ShortcutHandler {
